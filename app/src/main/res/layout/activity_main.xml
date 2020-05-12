@@ -8,13 +8,81 @@
     tools:context=".MainActivity">
 
 
-    <ImageButton
-        android:id="@+id/buttonPlay"
+    <TextView
+        android:id="@+id/startGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/expletus_sans_semibold"
+        android:text="Start"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="70sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_media_play" />
+        app:layout_constraintVertical_bias="0.307" />
+
+    <TextView
+        android:id="@+id/highscoresText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/expletus_sans_medium"
+        android:text="Highscores"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startGame"
+        app:layout_constraintVertical_bias="0.364" />
+
+    <TextView
+        android:id="@+id/circksHighscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/expletus_sans"
+        android:text="Cirks: 100"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/highscoresText"
+        app:layout_constraintVertical_bias="0.101" />
+
+    <TextView
+        android:id="@+id/avgTapTimeHighscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/expletus_sans"
+        android:text="Average Tap Time: 0.7 seconds"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/highscoresText"
+        app:layout_constraintVertical_bias="0.29" />
+
+    <TextView
+        android:id="@+id/totalTimeHighscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/expletus_sans"
+        android:text="Total Time: 3:52"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/highscoresText"
+        app:layout_constraintVertical_bias="0.497" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

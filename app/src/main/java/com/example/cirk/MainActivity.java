@@ -5,12 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton buttonPlay;
+    private TextView buttonPlay;
 
-    // TODO: change play button
     // TODO: add game over screen
 
     @Override
@@ -18,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        buttonPlay = findViewById(R.id.buttonPlay);
+        buttonPlay = findViewById(R.id.startGame);
         buttonPlay.setOnClickListener(this);
     }
 
