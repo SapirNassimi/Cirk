@@ -57,7 +57,7 @@ public class Circle {
         radius = 50 + random.nextInt(150 - 50 + 1);
 
         int randX = radius + random.nextInt(borders.x - (2 * radius));
-        int randY = radius + random.nextInt(borders.y - (2 * radius));
+        int randY = 160 + radius + random.nextInt(borders.y - (2 * radius) - 160);
 
         location.set(randX, randY);
 
