@@ -44,45 +44,46 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/expletus_sans"
-        android:text="Cirks: 100"
+        android:text="Cirks: 0"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/totalTimeHighscore"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/highscoresText"
-        app:layout_constraintVertical_bias="0.101" />
+        app:layout_constraintVertical_bias="0.887" />
 
     <TextView
         android:id="@+id/avgTapTimeHighscore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/expletus_sans"
-        android:text="Average Tap Time: 0.7 seconds"
+        android:text="Average Seconds Per Tap:"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/circksHighscore"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/highscoresText"
-        app:layout_constraintVertical_bias="0.29" />
+        app:layout_constraintVertical_bias="0.544" />
 
     <TextView
         android:id="@+id/totalTimeHighscore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/expletus_sans"
-        android:text="Total Time: 3:52"
+        android:text="Total Time: 0:00"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/highscoresText"
-        app:layout_constraintVertical_bias="0.497" />
+        app:layout_constraintVertical_bias="0.62" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
