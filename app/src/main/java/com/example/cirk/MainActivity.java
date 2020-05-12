@@ -10,6 +10,9 @@ import android.widget.ImageButton;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageButton buttonPlay;
 
+    // TODO: change play button
+    // TODO: add game over screen
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

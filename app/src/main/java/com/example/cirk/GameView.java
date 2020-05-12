@@ -20,6 +20,9 @@ public class GameView extends SurfaceView implements Runnable {
     private int strikes;
     private int pressedCirclesCount;
 
+    // TODO: add 2 red obstacle circles
+    // TODO: move all circles
+
     public GameView(Context context, int displayWidth, int displayHeight) {
         super(context);
 
@@ -63,12 +66,14 @@ public class GameView extends SurfaceView implements Runnable {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.BLACK);
 
+            // TODO: change to prettier font
+
             paint.setColor(Color.WHITE);
             paint.setTextSize(60);
             canvas.drawText("Strikes: " + strikes, 50, 120, paint);
 
             paint.setTextSize(110);
-            //  TODO: Center this text
+            // TODO: Center this text
             canvas.drawText(pressedCirclesCount + "", borders.x / 2 - 40, 140, paint);
 
             // TODO: add timer
