@@ -1,6 +1,7 @@
 package com.example.cirk;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,8 +14,6 @@ import android.view.SurfaceView;
 
 import androidx.core.content.res.ResourcesCompat;
 
-import java.util.Timer;
-
 public class GameView extends SurfaceView implements Runnable {
     private Point borders;
     volatile boolean isPlaying;
@@ -24,14 +23,17 @@ public class GameView extends SurfaceView implements Runnable {
     private SurfaceHolder surfaceHolder;
     private Circle circle;
     private int strikes;
-    private int pressedCirclesCount;
+    private int tappedCirclesCount;
     private long startTime;
+    SharedPreferences prefs;
 
     // TODO: add 2 red obstacle circles
     // TODO: move all circles
 
     public GameView(Context context, int displayWidth, int displayHeight) {
         super(context);
+
+        prefs = context.getSharedPreferences("game", Context.MODE_PRIVATE);
 
         surfaceHolder = getHolder();
         paint = new Paint();
@@ -49,7 +51,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void startNewGame() {
         strikes = 3;
-        pressedCirclesCount = 0;
+        tappedCirclesCount = 0;
         startTime = SystemClock.uptimeMillis();
         resume();
     }
@@ -57,11 +59,20 @@ public class GameView extends SurfaceView implements Runnable {
     @Override
     public void run() {
         while (isPlaying) {
+            draw();
+
             if (strikes > 0) {
                 update();
-                draw();
                 controlGame();
             } else {
+                long totalGameTime = SystemClock.uptimeMillis() - startTime;
+                long gameAverageTime = totalGameTime / tappedCirclesCount;
+                long lastHighscore = prefs.getLong("averageTapTime", 0);
+
+                if (lastHighscore > gameAverageTime || lastHighscore == 0) {
+                    saveHighscore(gameAverageTime, tappedCirclesCount, totalGameTime);
+                }
+
                 GameActivity activity = (GameActivity)getContext();
                 activity.finish();
             }
@@ -110,20 +121,6 @@ public class GameView extends SurfaceView implements Runnable {
         gameThread.start();
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent motionEvent) {
-        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-            if (didUserTouchTheCircle(motionEvent.getX(), motionEvent.getY())) {
-                pressedCirclesCount++;
-                circle.generateRandomCircle();
-            } else {
-                strikes--;
-            }
-        }
-
-        return true;
-    }
-
     private Boolean didUserTouchTheCircle(float touchPositionX, float touchPositionY) {
         double xPart = Math.pow((double)(touchPositionX - circle.getLocation().x), 2);
         double yPart = Math.pow((double)(touchPositionY - circle.getLocation().y), 2);
@@ -162,7 +159,7 @@ public class GameView extends SurfaceView implements Runnable {
         paint.setColor(Color.WHITE);
         paint.setTextSize(110);
         paint.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText(pressedCirclesCount + "", borders.x / 2, 150, paint);
+        canvas.drawText(tappedCirclesCount + "", borders.x / 2, 150, paint);
     }
 
     private void drawTimer() {
@@ -170,5 +167,27 @@ public class GameView extends SurfaceView implements Runnable {
         paint.setTextSize(60);
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.drawText(timeSinceGameStarted(), borders.x - 350, 135, paint);
+    }
+
+    private void saveHighscore(long avgTapTime, int count, long totalTime) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("averageTapTime", avgTapTime);
+        editor.putInt("cirks", count);
+        editor.putLong("totalTime", totalTime);
+        editor.apply();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+            if (didUserTouchTheCircle(motionEvent.getX(), motionEvent.getY())) {
+                tappedCirclesCount++;
+                circle.generateRandomCircle();
+            } else {
+                strikes--;
+            }
+        }
+
+        return true;
     }
 }
