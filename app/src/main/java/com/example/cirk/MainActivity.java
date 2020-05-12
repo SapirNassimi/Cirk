@@ -33,6 +33,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updateHighscores();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        updateHighscores();
+    }
+
     private void updateHighscores() {
         TextView avgTapTime = findViewById(R.id.avgTapTimeHighscore);
         TextView cirks = findViewById(R.id.circksHighscore);
