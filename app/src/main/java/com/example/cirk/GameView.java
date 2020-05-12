@@ -5,9 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import androidx.core.content.res.ResourcesCompat;
 
 public class GameView extends SurfaceView implements Runnable {
     private Point borders;
@@ -28,6 +31,9 @@ public class GameView extends SurfaceView implements Runnable {
 
         surfaceHolder = getHolder();
         paint = new Paint();
+
+        Typeface typeface = ResourcesCompat.getFont(context, R.font.expletus_sans);
+        paint.setTypeface(typeface);
 
         borders = new Point(displayWidth, displayHeight);
 
@@ -66,17 +72,17 @@ public class GameView extends SurfaceView implements Runnable {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.BLACK);
 
-            // TODO: change to prettier font
-
             paint.setColor(Color.WHITE);
-            paint.setTextSize(60);
-            canvas.drawText("Strikes: " + strikes, 50, 120, paint);
 
-            paint.setTextSize(110);
-            // TODO: Center this text
-            canvas.drawText(pressedCirclesCount + "", borders.x / 2 - 40, 140, paint);
+            paint.setTextSize(60);
+            paint.setTextAlign(Paint.Align.LEFT);
+            canvas.drawText("Strikes: " + strikes, 50, 135, paint);
 
             // TODO: add timer
+
+            paint.setTextSize(110);
+            paint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText(pressedCirclesCount + "", borders.x / 2, 150, paint);
 
             paint.setColor(circle.getColor());
 
