@@ -6,11 +6,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.core.content.res.ResourcesCompat;
+
+import java.util.Timer;
 
 public class GameView extends SurfaceView implements Runnable {
     private Point borders;
@@ -22,6 +25,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Circle circle;
     private int strikes;
     private int pressedCirclesCount;
+    private long startTime;
 
     // TODO: add 2 red obstacle circles
     // TODO: move all circles
@@ -46,6 +50,7 @@ public class GameView extends SurfaceView implements Runnable {
     private void startNewGame() {
         strikes = 3;
         pressedCirclesCount = 0;
+        startTime = SystemClock.uptimeMillis();
         resume();
     }
 
@@ -72,35 +77,21 @@ public class GameView extends SurfaceView implements Runnable {
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.BLACK);
 
-            paint.setColor(Color.WHITE);
-
-            paint.setTextSize(60);
-            paint.setTextAlign(Paint.Align.LEFT);
-            canvas.drawText("Strikes: " + strikes, 50, 135, paint);
-
-            // TODO: add timer
-
-            paint.setTextSize(110);
-            paint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText(pressedCirclesCount + "", borders.x / 2, 150, paint);
-
-            paint.setColor(circle.getColor());
-
-            canvas.drawCircle(circle.getLocation().x,
-                    circle.getLocation().y,
-                    circle.getRadius(),
-                    paint);
+            drawStrikes();
+            drawCounter();
+            drawTimer();
+            drawCircles();
 
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }
 
     private void controlGame() {
-//        try {
-//            gameThread.sleep(17);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            gameThread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void pause() {
@@ -139,5 +130,45 @@ public class GameView extends SurfaceView implements Runnable {
         double equalsTo = Math.pow((double)(circle.getRadius()), 2);
 
         return (xPart + yPart) < equalsTo;
+    }
+
+    private String timeSinceGameStarted() {
+        long currentTime = SystemClock.uptimeMillis() - startTime;
+        int seconds = (int)(currentTime / 1000);
+        int minutes = seconds / 60;
+        seconds %= 60;
+        int milliSeconds = (int)(currentTime % 1000);
+
+        return String.format("%02d", minutes) + ":" + String.format("%02d", seconds) + ":" + String.format("%03d", milliSeconds);
+    }
+
+    private void drawCircles() {
+        paint.setColor(circle.getColor());
+
+        canvas.drawCircle(circle.getLocation().x,
+                circle.getLocation().y,
+                circle.getRadius(),
+                paint);
+    }
+
+    private void drawStrikes() {
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(60);
+        paint.setTextAlign(Paint.Align.LEFT);
+        canvas.drawText("Strikes: " + strikes, 50, 135, paint);
+    }
+
+    private void drawCounter() {
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(110);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText(pressedCirclesCount + "", borders.x / 2, 150, paint);
+    }
+
+    private void drawTimer() {
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(60);
+        paint.setTextAlign(Paint.Align.LEFT);
+        canvas.drawText(timeSinceGameStarted(), borders.x - 350, 135, paint);
     }
 }
