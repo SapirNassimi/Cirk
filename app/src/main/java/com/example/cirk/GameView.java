@@ -65,16 +65,8 @@ public class GameView extends SurfaceView implements Runnable {
                 update();
                 controlGame();
             } else {
-                long totalGameTime = SystemClock.uptimeMillis() - startTime;
-                long gameAverageTime = totalGameTime / tappedCirclesCount;
-                long lastHighscore = prefs.getLong("averageTapTime", 0);
-
-                if (lastHighscore > gameAverageTime || lastHighscore == 0) {
-                    saveHighscore(gameAverageTime, tappedCirclesCount, totalGameTime);
-                }
-
-                GameActivity activity = (GameActivity)getContext();
-                activity.finish();
+                gameOver();
+                return;
             }
         }
     }
@@ -175,6 +167,21 @@ public class GameView extends SurfaceView implements Runnable {
         editor.putInt("cirks", count);
         editor.putLong("totalTime", totalTime);
         editor.apply();
+    }
+
+    private void gameOver() {
+        if (tappedCirclesCount != 0) {
+            long totalGameTime = SystemClock.uptimeMillis() - startTime;
+            long gameAverageTime = totalGameTime / tappedCirclesCount;
+            long lastHighscore = prefs.getLong("averageTapTime", 0);
+
+            if (lastHighscore > gameAverageTime || lastHighscore == 0) {
+                saveHighscore(gameAverageTime, tappedCirclesCount, totalGameTime);
+            }
+        }
+
+        GameActivity activity = (GameActivity)getContext();
+        activity.finish();
     }
 
     @Override
